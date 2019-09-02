@@ -7,8 +7,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Background="White"
     mc:Ignorable="d">
+    <Page.DataContext>
+        <local:ViewModel />
+    </Page.DataContext>
 
-    <Grid RequestedTheme="Light">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="818*" />
@@ -16,24 +19,27 @@
 
 
         </Grid.RowDefinitions>
+        <!--  KeyDown="Titulo_KeyDown"  -->
         <TextBox
             x:Name="titulo"
             Grid.Row="0"
             FontSize="40"
-            KeyDown="Titulo_KeyDown"
-            PlaceholderText="Ingresa tu titulo" />
+            PlaceholderText="Ingresa tu titulo"
+            Text="{Binding SelectItem.title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+            TextChanged="Titulo_TextChanged" />
 
         <StackPanel Grid.Row="1" Orientation="Horizontal">
             <ListView
                 x:Name="listNotas"
                 Width="450"
                 Background="DimGray"
-                SelectionChanged="ListNotas_SelectionChanged">
+                ItemsSource="{Binding Mynotes}"
+                SelectedItem="{Binding SelectItem, Mode=TwoWay}">
 
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
-                            <TextBlock Text="{Binding title, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Text="{Binding title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
